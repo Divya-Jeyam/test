@@ -1,0 +1,57 @@
+<html>
+<head>
+</head>
+<body>
+<script src="three.min.js"></script>
+<script type="text/javascript">
+
+//create a new scene
+var scene = new THREE.Scene();
+
+var fov = 75;
+var aspect = window.innerWidth / window.innerHeight;
+var near = 0.1; 
+var far  = 1000; 
+
+// create new camera with defined vars from above
+var camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
+
+// create a new WebGLRenderer object
+var renderer = new THREE.WebGLRenderer(); 
+//set the size of the rendering window
+renderer.setSize( window.innerWidth, window.innerHeight );
+// add the renderer to our page. This is the canvas element that the renderer uses
+// to display our scene
+document.body.appendChild( renderer.domElement );
+var radius = 2;
+var widthSegments = 100;
+var heightSegments = 100;
+var geometry = new THREE.SphereGeometry( radius, widthSegments, heightSegments );
+var material = new THREE.MeshBasicMaterial( { color: 0xADB1B4, wireframe: true } );
+// the Mesh object takes a geometry and applies a material to it that can be
+// inserted into the scene and be moved around
+var sphere = new THREE.Mesh( geometry, material );
+//add to our scene
+scene.add( sphere );
+camera.position.z = 5;
+
+// create render function. We use requestAnimationFrame instead of setInterval
+// because it pauses when the user navigates to another browser tab
+function render(){
+	requestAnimationFrame( render );
+	// rotation logic goes here
+	sphere.rotation.y += 0.05;
+	sphere.rotation.x += 0.05;
+	renderer.render( scene, camera );
+}
+// call our render function to display the sphere
+render();
+</script>
+
+
+</body>
+</html>
+
+
+
+
